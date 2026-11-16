@@ -35,7 +35,7 @@ export const CoverSheetBold = React.forwardRef<HTMLDivElement, { data: CoverData
           <div className="flex items-center gap-6">
             <div className="h-[88px] w-[88px] shrink-0 rounded-full bg-white flex items-center justify-center p-2">
               <img
-                src="/college-logo.png"
+                src="/college-logo.webp"
                 alt={COLLEGE_NAME}
                 className="h-full w-full object-contain"
               />

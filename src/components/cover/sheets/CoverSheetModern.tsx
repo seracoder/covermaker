@@ -24,7 +24,7 @@ export const CoverSheetModern = React.forwardRef<HTMLDivElement, { data: CoverDa
           <div className="flex items-center gap-6">
             <div className="h-[92px] w-[92px] shrink-0 rounded-2xl bg-white flex items-center justify-center p-1.5 shadow-md">
               <img
-                src="/college-logo.png"
+                src="/college-logo.webp"
                 alt={COLLEGE_NAME}
                 className="h-full w-full object-contain"
               />

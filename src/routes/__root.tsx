@@ -25,7 +25,7 @@ function RootComponent() {
           <Link to="/cover" className="flex items-center gap-3">
             <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/15 ring-1 ring-white/25">
               <img
-                src="/college-logo.png"
+                src="/college-logo.webp"
                 alt=""
                 className="h-7 w-7 object-contain"
               />

@@ -16,7 +16,7 @@ const config = defineConfig({
     viteReact(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['college-logo.png'],
+      includeAssets: ['college-logo.webp'],
       manifest: {
         name: 'Cover Page Maker — Govt. Tolaram College',
         short_name: 'Cover Maker',
@@ -28,13 +28,13 @@ const config = defineConfig({
         start_url: '/cover',
         scope: '/',
         icons: [
-          { src: '/icons/pwa-192.png', sizes: '192x192', type: 'image/png' },
-          { src: '/icons/pwa-512.png', sizes: '512x512', type: 'image/png' },
-          { src: '/icons/pwa-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+          { src: '/icons/pwa-192.webp', sizes: '192x192', type: 'image/webp' },
+          { src: '/icons/pwa-512.webp', sizes: '512x512', type: 'image/webp' },
+          { src: '/icons/pwa-maskable-512.webp', sizes: '512x512', type: 'image/webp', purpose: 'maskable' },
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,png,svg,ico,webmanifest}'],
+        globPatterns: ['**/*.{js,css,html,png,webp,svg,ico,webmanifest}'],
         navigateFallback: '/index.html',
         maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
       },

@@ -39,7 +39,7 @@ export const CoverSheetElegant = React.forwardRef<HTMLDivElement, { data: CoverD
           {/* Header */}
           <div className="flex flex-col items-center text-center">
             <img
-              src="/college-logo.png"
+              src="/college-logo.webp"
               alt={COLLEGE_NAME}
               className="h-[84px] w-auto object-contain"
             />

@@ -42,7 +42,7 @@ export const CoverSheetClassic = React.forwardRef<HTMLDivElement, { data: CoverD
           {/* Crest + name in one row */}
           <div className="flex items-center justify-center gap-5">
             <img
-              src="/college-logo.png"
+              src="/college-logo.webp"
               alt={COLLEGE_NAME}
               className="h-[72px] w-[72px] shrink-0 object-contain"
             />
