@@ -25,16 +25,25 @@ function coverFileName(courseCode: string, ext: string): string {
 
 export function CoverPreview({ data, styleId, onStyleChange, onEdit }: CoverPreviewProps) {
   const sheetRef = useRef<HTMLDivElement>(null)
+  const wrapperRef = useRef<HTMLDivElement>(null)
   const [scale, setScale] = useState(1)
   const [downloading, setDownloading] = useState(false)
   const [downloadingPdf, setDownloadingPdf] = useState(false)
   const [sharing, setSharing] = useState(false)
 
   useEffect(() => {
-    const update = () => setScale(Math.min(1, (window.innerWidth - 40) / SHEET_WIDTH))
+    const wrapper = wrapperRef.current
+    if (!wrapper) return
+    const update = () => {
+      // Measure the wrapper's real layout box — never window.innerWidth, which
+      // can misreport on mobile devices / emulators (e.g. 2× under OS scaling).
+      const available = wrapper.clientWidth || document.documentElement.clientWidth
+      if (available > 0) setScale(Math.min(1, available / SHEET_WIDTH))
+    }
     update()
-    window.addEventListener('resize', update)
-    return () => window.removeEventListener('resize', update)
+    const observer = new ResizeObserver(update)
+    observer.observe(wrapper)
+    return () => observer.disconnect()
   }, [])
 
   /** Rasterizes the cover sheet at 3× and returns the PNG data URL. */
@@ -189,11 +198,12 @@ export function CoverPreview({ data, styleId, onStyleChange, onEdit }: CoverPrev
       </div>
 
       <div
+        ref={wrapperRef}
         id="cover-scale"
-        className="mx-auto overflow-hidden"
-        style={{ width: SHEET_WIDTH * scale, height: SHEET_HEIGHT * scale }}
+        className="mx-auto w-full overflow-hidden"
+        style={{ height: SHEET_HEIGHT * scale }}
       >
-        <div style={{ transform: `scale(${scale})`, transformOrigin: 'top left' }}>
+        <div style={{ transform: `scale(${scale})`, transformOrigin: 'top left', width: SHEET_WIDTH }}>
           <CoverSheet ref={sheetRef} data={data} styleId={styleId} />
         </div>
       </div>
