@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { toPng } from 'html-to-image'
 import { jsPDF } from 'jspdf'
-import { ArrowLeft, Download, Printer, Share2 } from 'lucide-react'
+import { ArrowLeft, Download, FileDown, Share2 } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
@@ -27,6 +27,7 @@ export function CoverPreview({ data, styleId, onStyleChange, onEdit }: CoverPrev
   const sheetRef = useRef<HTMLDivElement>(null)
   const [scale, setScale] = useState(1)
   const [downloading, setDownloading] = useState(false)
+  const [downloadingPdf, setDownloadingPdf] = useState(false)
   const [sharing, setSharing] = useState(false)
 
   useEffect(() => {
@@ -77,6 +78,24 @@ export function CoverPreview({ data, styleId, onStyleChange, onEdit }: CoverPrev
     pdf.addImage(dataUrl, 'PNG', 0, 0, 210, 297)
     return pdf.output('blob')
   }, [getSheetPng])
+
+  const handleDownloadPdf = useCallback(async () => {
+    setDownloadingPdf(true)
+    try {
+      const blob = await getSheetPdfBlob()
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.download = coverFileName(data.courseCode, 'pdf')
+      link.href = url
+      link.click()
+      URL.revokeObjectURL(url)
+      toast.success('PDF downloaded')
+    } catch {
+      toast.error('Failed to generate the PDF. Please try again.')
+    } finally {
+      setDownloadingPdf(false)
+    }
+  }, [data.courseCode, getSheetPdfBlob])
 
   const handleShare = useCallback(async () => {
     setSharing(true)
@@ -171,7 +190,7 @@ export function CoverPreview({ data, styleId, onStyleChange, onEdit }: CoverPrev
 
       <div
         id="cover-scale"
-        className="mx-auto"
+        className="mx-auto overflow-hidden"
         style={{ width: SHEET_WIDTH * scale, height: SHEET_HEIGHT * scale }}
       >
         <div style={{ transform: `scale(${scale})`, transformOrigin: 'top left' }}>
@@ -193,8 +212,14 @@ export function CoverPreview({ data, styleId, onStyleChange, onEdit }: CoverPrev
             </>
           )}
         </Button>
-        <Button variant="outline" onClick={() => window.print()} className="h-11">
-          <Printer className="w-4 h-4 mr-2" /> Download PNG
+        <Button variant="outline" onClick={handleDownloadPdf} disabled={downloadingPdf} className="h-11">
+          {downloadingPdf ? (
+            'Generating…'
+          ) : (
+            <>
+              <FileDown className="w-4 h-4 mr-2" /> Download PDF
+            </>
+          )}
         </Button>
         <Button
           variant="outline"
