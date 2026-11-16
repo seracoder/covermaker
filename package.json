@@ -9,7 +9,9 @@
     "dev": "vite dev --port 3000",
     "generate-routes": "tsr generate",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "vite build && npx wrangler deploy",
+    "cf:dev": "npx wrangler dev"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.17",

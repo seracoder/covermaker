@@ -1,0 +1,28 @@
+{
+  // Cloudflare Workers (static assets) config — deploys the built SPA from dist/.
+  // Deploy with: `vite build && npx wrangler deploy` (run `npx wrangler login` first).
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "covermaker",
+  "compatibility_date": "2026-11-16",
+
+  // Capture Worker logs + exceptions in the Cloudflare dashboard (Workers > Logs).
+  "observability": {
+    "enabled": true
+  },
+
+  // Expose the default <name>.<subdomain>.workers.dev preview URL.
+  "workers_dev": true,
+
+  "assets": {
+    // Built output of `vite build`.
+    "directory": "./dist",
+
+    // Serve index.html for unknown paths so client-side routes (/cover, /history)
+    // work on hard refresh / direct links — required for an SPA.
+    "not_found_handling": "single-page-application",
+
+    // Clean-URL handling: /cover serves /cover/index.html if present,
+    // /cover.html redirects to /cover (default behaviour, made explicit).
+    "html_handling": "auto-trailing-slash"
+  }
+}
