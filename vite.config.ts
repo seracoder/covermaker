@@ -38,9 +38,8 @@ const config = defineConfig({
         navigateFallback: '/index.html',
         maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
       },
-      devOptions: {
-        enabled: true,
-      },
+      // No SW in `vite dev` — stale precache masks asset changes during development.
+      // Test offline against the production build: `pnpm preview` or `pnpm cf:dev`.
     }),
   ],
 })
