@@ -39,11 +39,6 @@ export const teachers: Teacher[] = [
     department: Department.ACCOUNTING,
   },
   {
-    name: 'Prof. Mahbub Alam',
-    designation: Designation.PROFESSOR,
-    department: Department.ACCOUNTING,
-  },
-  {
     name: 'Prof. Sagar Bikash Bhowmick',
     designation: Designation.PROFESSOR,
     department: Department.ACCOUNTING,
